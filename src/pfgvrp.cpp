@@ -12,6 +12,6 @@ using namespace std;
 
 int main() {
 	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
-	solomon sol("C102.txt");
+	//solomon sol("C102.txt");
 	return 0;
 }
