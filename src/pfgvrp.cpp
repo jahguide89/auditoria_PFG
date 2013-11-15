@@ -8,10 +8,12 @@
 
 #include <iostream>
 #include "recogida.h"
+#include "solomon.h"
 using namespace std;
 
 int main() {
 	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
 	solomon sol("C102.txt");
+	sol.mostrarpunto();
 	return 0;
 }

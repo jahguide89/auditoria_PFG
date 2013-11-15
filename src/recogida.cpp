@@ -14,6 +14,7 @@ precogida :: precogida () {
 };
 
 precogida :: precogida (int x, float d) {
+   visitado = NULL;
    id = x;
    distancia = d;
 };
@@ -27,6 +28,7 @@ float precogida :: getdistancia () {
 };
 
 precogida :: precogida (const precogida &p) {
+   visitado = NULL;
    id = p.id;
    distancia = p.distancia;
 };
@@ -62,6 +64,7 @@ tvehiculo :: tvehiculo () {
 };
 
 tvehiculo :: tvehiculo (int i, int uut) {
+   //coste = 0;
    id = i;
    ut = uut;
    ua = 0;
@@ -118,6 +121,7 @@ mdistancia :: mdistancia (int n) {
 };
 
 mdistancia :: mdistancia (string nombre) {
+   N = 0;
    ifstream fich(nombre.c_str());
    fich >> N;
    vector<precogida> aux;
@@ -354,202 +358,6 @@ void optimo :: repetir (int n) {
    cout << "El mejor: " << menor.get_coste_total() << endl;
 };
 
-punto_solomon :: punto_solomon () {
-   id = 0;
-   x = 0;
-   y = 0;
-   demanda = 0;
-   rtime = 0;
-   ddate = 0;
-   servtime = 0;
-};
-
-punto_solomon :: punto_solomon (int aid, int ax, int ay, int ademanda, int artime, int addate, int aservtime) {
-   id = aid;
-   x = ax;
-   y = ay;
-   demanda = ademanda;
-   rtime = artime;
-   ddate = addate;
-   servtime = aservtime;
-};
-
-void punto_solomon :: setid (int i) {
-   id = i;
-};
-
-void punto_solomon :: setx (int i) {
-   x = i;
-};
-
-void punto_solomon :: sety (int i) {
-   y = i;
-};
-
-void punto_solomon :: setdemanda (int i) {
-   demanda = i;
-};
-
-void punto_solomon :: setrtime (int i) {
-   rtime = i;
-};
-
-void punto_solomon :: setddate (int i) {
-   ddate = i;
-};
-
-void punto_solomon :: setservtime (int i) {
-   servtime = i;
-};
-
-int punto_solomon :: getid () {
-   return id;
-};
-
-int punto_solomon :: getx () {
-   return x;
-};
-
-int punto_solomon :: gety () {
-   return y;
-};
-
-int punto_solomon :: getdemanda () {
-   return demanda;
-};
-
-int punto_solomon :: getrtime () {
-   return rtime;
-};
-
-int punto_solomon :: getddate () {
-   return ddate;
-};
-
-int punto_solomon :: setservtime () {
-   return servtime;
-};
-
-solomon :: solomon () {
-   ncamiones = 0;
-   nclientes = 0;
-   capacidadcamiones = 0;
-   xmin = 9999;
-   xmax = 0;
-   ymin = 9999;
-   ymax = 0;
-};
-
-//getNextLine no devuelve nada, devuelve 1 si es el final del fichero, sino devuelve 0
-//simplemente comprueba que no se haya acabado el fichero
-//
-solomon :: solomon (string nombre) {
-   punto_solomon punto;
-   ifstream fich(nombre.c_str()); //comprobar cómo actúa con los enter, con las líneas enter vacías y cómo saltar de línea sin que ésta haya terminado
-   int aux, auxil;
-   aux = getNextLine(); //lee la primera línea, el nombre del fichero
-   aux = getNextLine(); //lee VEHICLE
-   do { //lee NUMBER CAPACITY
-      aux = getNextLine(); //tengo el include de getnextline?
-      if (aux != 0)
-         break;
-      aux = compareNoCase("NUMBER"); //tengo el include de comparenocase?
-      if (aux != 0)
-         break;
-      aux = compareNoCase("CAPACITY");
-         break;
-   }
-   while (false);
-   aux = getNextLine();
-   aux = getInteger(ncamiones); //comprobar que funciona eso
-   aux = getInteger(capacidadcamiones); //idem
-   do {
-      aux = getNextLine();
-      if (aux != 0)
-         break;
-      aux = compareNoCase("CUST");
-      if (aux != 0)
-         break;
-      aux = compareNoCase("NO.");
-      if (aux != 0)
-         break;
-      aux = compareNoCase("XCOORD.");
-      if (aux != 0)
-         break;
-      aux = compareNoCase("YCOORD.");
-      if (aux != 0)
-         break;
-      aux = compareNoCase("DEMAND");
-      if (aux != 0)
-         break;
-      aux = compareNoCase("READY");
-      if (aux != 0)
-         break;
-      aux = compareNoCase("TIME");
-      if (aux != 0)
-         break;
-      aux = compareNoCase("DUE");
-      if (aux != 0)
-         break;
-      aux = compareNoCase("DATE");
-      if (aux != 0)
-         break;
-      aux = compareNoCase("SERVICE");
-      if (aux != 0)
-         break;
-      aux = compareNoCase("TIME");
-      if (aux != 0)
-         break;
-   }
-   while (false);
-   do
-   {
-      aux = getNextLine(); //lee fila de datos
-      if (aux != 0) {
-         aux = 0;
-         break;
-      }
-      aux = getInteger(auxil); //lee id del cliente
-      punto.setid(auxil);
-      if (aux != 0)
-         break;
-      nclientes++;
-      aux = getInteger(auxil); //lee coordenada x
-      punto.setx(auxil);
-      if (xmin > auxil)
-         xmin = auxil;
-      else if (xmax < auxil)
-         xmax = auxil;
-      if (aux != 0)
-         break;
-      aux = getInteger(auxil); //lee coordenada y
-      punto.sety(auxil);
-      if (ymin > auxil)
-         ymin = auxil;
-      else if (ymax < auxil)
-         ymax = auxil;
-      if (aux != 0)
-         break;
-      aux = getInteger(auxil); //lee demanda
-      punto.setdemanda(auxil);
-      if (aux != 0)
-         break;
-      aux = getInteger(auxil); //lee demanda
-      punto.setrtime(auxil);
-      if (aux != 0)
-         break;
-      aux = getInteger(auxil); //lee demanda
-      punto.setddate(auxil);
-      if (aux != 0)
-         break;
-      aux = getInteger(auxil); //lee demanda
-      punto.setservtime(auxil);
-      if (aux != 0)
-         break;
-      listado.push_back(punto);
-   }
-   while (true);
-};
 
 /*
 Adaptar a mi código, en la clase solomon como operación
