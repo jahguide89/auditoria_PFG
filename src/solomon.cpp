@@ -99,7 +99,16 @@ solomon :: solomon () {
 //
 solomon :: solomon (string nombre) {
    ifstream file(nombre.c_str());
-   while (!file.eof()) {
+   string aux;
+   for (int i = 0; i < 4; i++) //saltamos las 4 primeras palabras
+      file >> aux;
+   file >> ncamiones;
+   file >> capacidadcamiones;
+   for (int i = 0; i < 13; i++)//saltamos las siguientes 12 palabras
+       file >> aux;
+   //empezamos a leer todos los numeros
+   while (!file.eof()) { //saltamos las siguientes 12 palabras
+
    string aux;
    file >> aux;
    cout << aux << endl;
