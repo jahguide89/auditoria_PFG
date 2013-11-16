@@ -15,6 +15,7 @@ int main() {
 	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
 	solomon sol("C102.txt");
 	//sol.mostrarpunto();
+	cout << "adios" << endl;
 	cin.get();
 	return 0;
 }
