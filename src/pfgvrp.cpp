@@ -14,6 +14,7 @@ using namespace std;
 int main() {
 	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
 	solomon sol("C102.txt");
-	sol.mostrarpunto();
+	//sol.mostrarpunto();
+	cin.get();
 	return 0;
 }
