@@ -104,20 +104,38 @@ solomon :: solomon (string nombre) {
       file >> aux;
    file >> ncamiones;
    file >> capacidadcamiones;
-   for (int i = 0; i < 13; i++)//saltamos las siguientes 12 palabras
+   for (int i = 0; i < 12; i++)//saltamos las siguientes 12 palabras
        file >> aux;
    //empezamos a leer todos los numeros
    while (!file.eof()) { //saltamos las siguientes 12 palabras
-
-   string aux;
-   file >> aux;
-   cout << aux << endl;
+      int num;
+      punto_solomon p;
+      file >> num;
+      p.setid(num);
+      file >> num;
+      p.setx(num);
+      file >> num;
+      p.sety(num);
+      file >> num;
+      p.setdemanda(num);
+      file >> num;
+      p.setrtime(num);
+      file >> num;
+      p.setddate(num);
+      file >> num;
+      p.setservtime(num);
+      listado.push_back(p);
    }
    file.close();
 
 };
 
 void solomon :: mostrarlistado () {
+   cout << "Numero de camiones: " << ncamiones << endl;
+   cout << "Capacidad de camiones: " << capacidadcamiones << endl;
+   for (unsigned int i = 0; i < listado.size(); i++) {
+	   cout << "X: " << listado[i].getx() << ", Y: " << listado[i].gety() << endl;
+   }
 
 };
 

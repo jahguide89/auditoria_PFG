@@ -14,6 +14,7 @@ using namespace std;
 int main() {
 	cout << "ejecucion" << endl;
 	solomon sol("C102.txt");
+	sol.mostrarlistado();
 	//sol.mostrarpunto();
 	cout << "adios" << endl;
 	cin.get();
