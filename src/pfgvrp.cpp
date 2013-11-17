@@ -12,7 +12,7 @@
 using namespace std;
 
 int main() {
-	cout << "Hola!" << endl;
+
 	solomon sol("C102.txt");
 	sol.mostrarlistado();
 	//sol.mostrarpunto();
