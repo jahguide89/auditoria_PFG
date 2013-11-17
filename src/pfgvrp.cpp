@@ -18,5 +18,6 @@ int main() {
 	//sol.mostrarpunto();
 	cout << "adios" << endl;
 	cin.get();
+	cin.get();
 	return 0;
 }
