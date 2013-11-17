@@ -51,6 +51,7 @@ private:
    vector <punto_solomon> listado;
    int xmin, xmax;
    int ymin, ymax;
+   vector <vector <int> > matriz;
 public:
    solomon (); //inicializar a 0 los totales y los max y a 999 los mínimos
    //leer de fichero
@@ -65,6 +66,8 @@ public:
    void mostrarlistado();
    //mostrar un punto
    void mostrarpunto();
+   //mostrar matriz de distancias de solomon
+   void mostrarmatriz();
 };
 
 #endif /* SOLOMON_H_ */

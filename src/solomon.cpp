@@ -7,6 +7,7 @@
 
 #include "solomon.h"
 #include <fstream>
+#include <vector>
 
 punto_solomon :: punto_solomon () {
    id = 0;
@@ -127,8 +128,21 @@ solomon :: solomon (string nombre) {
       listado.push_back(p);
    }
    file.close();
+   vector <int> dummy;
+   for (unsigned int i = 0; i < listado.size(); i++)
+	   dummy.push_back(-1);
+   for (unsigned int i = 0; i < listado.size(); i++)
+	   matriz.push_back(dummy);
 
 };
+
+void solomon :: mostrarmatriz () {
+	for (unsigned int i = 0; i < matriz.size(); i++) {
+		for (unsigned int j = 0; j < matriz.size(); j++)
+           cout << matriz[i][j];
+        cout << endl;
+	}
+}
 
 void solomon :: mostrarlistado () {
    cout << "Numero de camiones: " << ncamiones << endl;

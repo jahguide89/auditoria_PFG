@@ -349,7 +349,7 @@ void optimo :: repetir (int n) {
       sol.ejecutar();
       cout << "Sol->getcoste... " << sol.get_coste_total() << " VS " << menor.get_coste_total() << endl;
       if (sol.get_coste_total() < menor.get_coste_total()) {
-	 cout << "=00000000mejor" << endl;
+	     cout << "=00000000mejor" << endl;
          menor = sol;
       }
       gettimeofday(&fin, NULL);

@@ -16,6 +16,7 @@ int main() {
 	solomon sol("C102.txt");
 	sol.mostrarlistado();
 	//sol.mostrarpunto();
+	sol.mostrarmatriz();
 	cout << "adios!!!" << endl;
 	cin.get();
 	return 0;
