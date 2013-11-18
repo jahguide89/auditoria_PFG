@@ -25,9 +25,17 @@ int main() {
 	*/
 
    //cout << "**** coste total: " << res.get_coste_total() << endl;
-    mdistancia matriz("entrada.txt");
+    //mdistancia matriz("entrada.txt");
+	solomon sol("C102.txt");
+	sol.calcularmatriz();
+	sol.mostrarmatriz();
+	mdistancia matriz;
+	matriz = sol.convertir();
+	cout << "aqui" << endl;
+	matriz.imprimir();
+	cin.get();
 	optimo opt(matriz);
-	opt.repetir(3);
+	opt.repetir(1);
 	cin.get();
 
 

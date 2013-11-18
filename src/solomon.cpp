@@ -134,10 +134,13 @@ solomon :: solomon (string nombre) {
 	   dummy.push_back(-1);
    for (unsigned int i = 0; i < listado.size(); i++)
 	   matriz.push_back(dummy);
+   nclientes = listado.size();
 
 };
 
 void solomon :: mostrarmatriz () {
+	cout << "Ncientes: " << nclientes << endl;
+	cin.get();
 	for (unsigned int i = 0; i < matriz.size(); i++) {
 		for (unsigned int j = 0; j < matriz.size(); j++)
            cout << matriz[i][j];
@@ -164,8 +167,8 @@ void solomon :: calcularmatriz() {
    for (unsigned int i = 0; i < listado.size(); i++) {
 	   for (unsigned int j = 0; j < listado.size(); j++) {
            matriz[i][j] = deuclidea(listado[j].getx(),listado[i].getx(),listado[j].gety(),listado[i].gety());
-           cout << "valor: " << matriz[i][j] << endl;
-           cin.get();
+           //cout << "valor: " << matriz[i][j] << endl;
+           //cin.get();
 	   }
    }
 }
@@ -184,11 +187,19 @@ mdistancia solomon :: convertir () {
    for (int i = 0; i < nclientes; i++)
 	 aux2.push_back(aux);
    //fin de la inicializacion de la matriz
+   cout << "holakase" << endl;
+   cout << "nclientes: " << nclientes << endl;
    for (int i = 0; i < nclientes; i++)
 	  for (int j = 0; j < nclientes; j++) {
+		cout << "weba0" << endl;
 		aux2[i][j].setdistancia(matriz[i][j]);
 		aux2[i][j].setid(j);
+		cout << "matriz ij: " << matriz[i][j] << endl;
+		cin.get();
 	  };
    mdistancia ret(nclientes,aux2);
+   cout << "llamada desde solomon convertir" << endl;
+   ret.imprimir();
+   cin.get();
    return ret;
 }
