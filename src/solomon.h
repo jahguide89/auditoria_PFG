@@ -41,6 +41,7 @@ public:
    int getrtime ();
    int getddate ();
    int setservtime ();
+
 };
 
 class solomon {
@@ -68,6 +69,10 @@ public:
    void mostrarpunto();
    //mostrar matriz de distancias de solomon
    void mostrarmatriz();
+   //calcular la matriz de distancias
+   void calcularmatriz();
+   //calcular la distancia euclidea entre dos puntos
+   int deuclidea(int x1, int x2, int y1, int y2);
 };
 
 #endif /* SOLOMON_H_ */

@@ -17,6 +17,8 @@ int main() {
 	sol.mostrarlistado();
 	//sol.mostrarpunto();
 	sol.mostrarmatriz();
+	sol.calcularmatriz();
+	sol.mostrarmatriz();
 	cout << "adios!!!" << endl;
 	cin.get();
 	return 0;

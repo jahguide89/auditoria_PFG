@@ -8,6 +8,7 @@
 #include "solomon.h"
 #include <fstream>
 #include <vector>
+#include <math.h>
 
 punto_solomon :: punto_solomon () {
    id = 0;
@@ -158,4 +159,19 @@ void solomon :: mostrarpunto () {
    cout << "x: " << listado[1].getx() << endl;
    cout << "y: " << listado[1].gety() << endl;
 };
+
+void solomon :: calcularmatriz() {
+   for (int i = 0; i < listado.size(); i++) {
+	   for (int j = 0; j < listado.size(); j++) {
+           matriz[i][j] = deuclidea(listado[j].getx(),listado[i].getx(),listado[j].gety(),listado[i].gety());
+           cout << "valor: " << matriz[i][j] << endl;
+           cin.get();
+	   }
+   }
+}
+
+//calcular la distancia euclidea entre dos puntos
+int solomon :: deuclidea(int x1, int x2, int y1, int y2) {
+   return sqrt(pow((x2-x1),2) + pow((y2-y1),2));
+}
 
