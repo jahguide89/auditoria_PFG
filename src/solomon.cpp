@@ -139,7 +139,9 @@ solomon :: solomon (string nombre) {
 };
 
 void solomon :: mostrarmatriz () {
-	cout << "Ncientes: " << nclientes << endl;
+	cout << "Nclientes: " << nclientes << endl;
+	cout << "matriz size: " << matriz.size() << endl;
+	cout << "listado size: " << listado.size() << endl;
 	cin.get();
 	for (unsigned int i = 0; i < matriz.size(); i++) {
 		for (unsigned int j = 0; j < matriz.size(); j++)
@@ -191,11 +193,8 @@ mdistancia solomon :: convertir () {
    cout << "nclientes: " << nclientes << endl;
    for (int i = 0; i < nclientes; i++)
 	  for (int j = 0; j < nclientes; j++) {
-		cout << "weba0" << endl;
 		aux2[i][j].setdistancia(matriz[i][j]);
 		aux2[i][j].setid(j);
-		cout << "matriz ij: " << matriz[i][j] << endl;
-		cin.get();
 	  };
    mdistancia ret(nclientes,aux2);
    cout << "llamada desde solomon convertir" << endl;

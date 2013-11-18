@@ -27,8 +27,9 @@ int main() {
    //cout << "**** coste total: " << res.get_coste_total() << endl;
     //mdistancia matriz("entrada.txt");
 	solomon sol("C102.txt");
+	//sol.mostrarlistado();
 	sol.calcularmatriz();
-	sol.mostrarmatriz();
+	//sol.mostrarmatriz();
 	mdistancia matriz;
 	matriz = sol.convertir();
 	cout << "aqui" << endl;
