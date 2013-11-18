@@ -66,7 +66,9 @@ private:
    mdistancia mord; //matriz de distancias ordenada
    list <int> visitados; //clientes visitados
 public:
-   ruta();
+   //ruta();
+   ruta(mdistancia mat); //constructor con una matriz ya inicializada desde fuera
+   ruta(string nombre);
    vector<precogida> ordenar_fila (int i);
    precogida candidatos (int i);
    void buscar (tvehiculo &v, int media);
@@ -79,18 +81,20 @@ public:
 class resolver {
 private:
    vector <tvehiculo> vehiculos; //contiene una lista con los vehiculos que van a realizar las recogidas
-   ruta rt; //se encarga de buscar las rutas para los camiones
+   ruta * rt; //se encarga de buscar las rutas para los camiones
    float coste_total;
    int cmed; //carga media de los contenedores
 public:
-   resolver();
+   resolver(mdistancia mat);
    void ejecutar ();
    int get_coste_total ();
 };
 
 class optimo {
 private:
-   resolver menor;
+   resolver * inicial;
+   resolver * menor;
 public:
+  optimo (mdistancia mat);
   void repetir (int i);
 };

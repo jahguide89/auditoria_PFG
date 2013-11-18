@@ -73,6 +73,8 @@ public:
    void calcularmatriz();
    //calcular la distancia euclidea entre dos puntos
    int deuclidea(int x1, int x2, int y1, int y2);
+
+
 };
 
 #endif /* SOLOMON_H_ */

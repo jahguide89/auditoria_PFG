@@ -233,7 +233,7 @@ void ruta :: buscar (tvehiculo &v, int media) {
 //eliminar de la matriz auxiliar o inutilizar los elementos ya visitados -- De todas formas tienes que recorrer la fila entera para identificar los utiles.
 
 //insertar en un vector auxiliar los elementos no visitados y ordenarlos
-
+/*
 ruta :: ruta() {
    mdistancia aux("entrada.txt");
    mraw = aux;
@@ -241,6 +241,22 @@ ruta :: ruta() {
    //mord.ordenar_matriz();
    insertar_visitado(0);
 };
+
+*/
+
+ruta :: ruta (mdistancia mat) {
+   mraw = mat;
+   mord = mat;    //nn
+   //mord.ordenar_matriz();
+   insertar_visitado(0);
+}
+
+ruta :: ruta (string nombre) {
+   mdistancia aux(nombre.c_str());
+   mraw = aux;
+   mord = aux;
+   insertar_visitado(0);
+}
 
 vector<precogida> ruta :: ordenar_fila (int i) {
    vector<precogida> candidatos;
@@ -319,7 +335,8 @@ float ruta :: getdistanciaij (int i, int j) {
    return ret.getdistancia(); //devolvemos la distancia de un punto a otro
 };
 
-resolver :: resolver () {
+resolver :: resolver (mdistancia mat) {
+  rt = new ruta(mat);
   for (int i = 0; i < 4; i++) {
      tvehiculo vec(i,15+i);
      vehiculos.push_back(vec);
@@ -330,7 +347,7 @@ resolver :: resolver () {
 
 void resolver :: ejecutar() {
    for (int i = 0; i < vehiculos.size(); i++) {
-      rt.buscar(vehiculos[i],cmed);
+      rt->buscar(vehiculos[i],cmed);
       coste_total+=vehiculos[i].get_coste();
    }
 };
@@ -339,13 +356,18 @@ int resolver :: get_coste_total() {
    return coste_total;
 };
 
+optimo :: optimo (mdistancia mat) {
+   inicial = new resolver(mat);
+   menor = new resolver(mat);
+}
+
 void optimo :: repetir (int n) {
    menor.ejecutar();
    struct timeval inicio, fin;
    for (int i = 0;i < n; i++) {
       gettimeofday(&inicio, NULL);
       cout << endl << endl << endl;
-      resolver sol;
+      //resolver sol;
       sol.ejecutar();
       cout << "Sol->getcoste... " << sol.get_coste_total() << " VS " << menor.get_coste_total() << endl;
       if (sol.get_coste_total() < menor.get_coste_total()) {
