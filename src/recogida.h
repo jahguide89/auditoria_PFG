@@ -94,6 +94,7 @@ class optimo {
 private:
    resolver * inicial;
    resolver * menor;
+   mdistancia matr;
 public:
   optimo (mdistancia mat);
   void repetir (int i);

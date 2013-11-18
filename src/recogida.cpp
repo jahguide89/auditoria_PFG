@@ -359,25 +359,26 @@ int resolver :: get_coste_total() {
 optimo :: optimo (mdistancia mat) {
    inicial = new resolver(mat);
    menor = new resolver(mat);
+   matr = mat;
 }
 
 void optimo :: repetir (int n) {
-   menor.ejecutar();
+   menor->ejecutar();
    struct timeval inicio, fin;
    for (int i = 0;i < n; i++) {
       gettimeofday(&inicio, NULL);
       cout << endl << endl << endl;
-      //resolver sol;
-      sol.ejecutar();
-      cout << "Sol->getcoste... " << sol.get_coste_total() << " VS " << menor.get_coste_total() << endl;
-      if (sol.get_coste_total() < menor.get_coste_total()) {
+      resolver *sol = new resolver(matr);
+      sol->ejecutar();
+      cout << "Sol->getcoste... " << sol->get_coste_total() << " VS " << menor->get_coste_total() << endl;
+      if (sol->get_coste_total() < menor->get_coste_total()) {
 	     cout << "=00000000mejor" << endl;
-         menor = sol;
+         menor =  sol;
       }
       gettimeofday(&fin, NULL);
       cout << "Duracion del calculo: " << ((fin.tv_sec+(float)fin.tv_usec/1000000)-(inicio.tv_sec+(float)inicio.tv_usec/1000000)) << endl;
    };
-   cout << "El mejor: " << menor.get_coste_total() << endl;
+   cout << "El mejor: " << menor->get_coste_total() << endl;
 };
 
 
