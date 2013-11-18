@@ -9,6 +9,9 @@
 
 using namespace std;
 
+#ifndef RECOGIDA_H_
+#define RECOGIDA_H_
+
 class precogida { //la idea es hacerla abstracta
    //String nombre;
    int id; //numero identificador
@@ -53,6 +56,7 @@ public:
    mdistancia ();
    mdistancia (int n);
    mdistancia (string nombre);
+   mdistancia (int n, vector <vector <precogida> > &vec);
    int getsize ();
    precogida get (int i, int j);
    void ordenar_matriz ();
@@ -99,3 +103,5 @@ public:
   optimo (mdistancia mat);
   void repetir (int i);
 };
+
+#endif

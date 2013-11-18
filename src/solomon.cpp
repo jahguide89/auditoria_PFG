@@ -129,7 +129,7 @@ solomon :: solomon (string nombre) {
       listado.push_back(p);
    }
    file.close();
-   vector <int> dummy;
+   vector <float> dummy;
    for (unsigned int i = 0; i < listado.size(); i++)
 	   dummy.push_back(-1);
    for (unsigned int i = 0; i < listado.size(); i++)
@@ -161,8 +161,8 @@ void solomon :: mostrarpunto () {
 };
 
 void solomon :: calcularmatriz() {
-   for (int i = 0; i < listado.size(); i++) {
-	   for (int j = 0; j < listado.size(); j++) {
+   for (unsigned int i = 0; i < listado.size(); i++) {
+	   for (unsigned int j = 0; j < listado.size(); j++) {
            matriz[i][j] = deuclidea(listado[j].getx(),listado[i].getx(),listado[j].gety(),listado[i].gety());
            cout << "valor: " << matriz[i][j] << endl;
            cin.get();
@@ -171,7 +171,24 @@ void solomon :: calcularmatriz() {
 }
 
 //calcular la distancia euclidea entre dos puntos
-int solomon :: deuclidea(int x1, int x2, int y1, int y2) {
+float solomon :: deuclidea(int x1, int x2, int y1, int y2) {
    return sqrt(pow((x2-x1),2) + pow((y2-y1),2));
 }
 
+mdistancia solomon :: convertir () {
+   vector<precogida> aux;
+   vector <vector <precogida> > aux2;
+   precogida dummy;
+   for (int i = 0; i < nclientes; i++)
+	 aux.push_back(dummy);
+   for (int i = 0; i < nclientes; i++)
+	 aux2.push_back(aux);
+   //fin de la inicializacion de la matriz
+   for (int i = 0; i < nclientes; i++)
+	  for (int j = 0; j < nclientes; j++) {
+		aux2[i][j].setdistancia(matriz[i][j]);
+		aux2[i][j].setid(j);
+	  };
+   mdistancia ret(nclientes,aux2);
+   return ret;
+}

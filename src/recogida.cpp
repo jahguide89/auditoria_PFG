@@ -140,6 +140,11 @@ mdistancia :: mdistancia (string nombre) {
       };
 };
 
+mdistancia :: mdistancia (int n, vector <vector <precogida> > &vec) {
+   N = n;
+   md = vec;
+}
+
 int mdistancia :: getsize() {
    return N;
 };

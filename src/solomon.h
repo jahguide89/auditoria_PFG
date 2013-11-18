@@ -6,6 +6,7 @@
  */
 #include <iostream>
 #include <vector>
+#include "recogida.h"
 
 using namespace std;
 
@@ -52,7 +53,7 @@ private:
    vector <punto_solomon> listado;
    int xmin, xmax;
    int ymin, ymax;
-   vector <vector <int> > matriz;
+   vector <vector <float> > matriz;
 public:
    solomon (); //inicializar a 0 los totales y los max y a 999 los mínimos
    //leer de fichero
@@ -72,7 +73,9 @@ public:
    //calcular la matriz de distancias
    void calcularmatriz();
    //calcular la distancia euclidea entre dos puntos
-   int deuclidea(int x1, int x2, int y1, int y2);
+   float deuclidea(int x1, int x2, int y1, int y2);
+   //convertir a mdistancia
+   mdistancia convertir();
 
 
 };
