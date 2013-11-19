@@ -140,9 +140,11 @@ mdistancia :: mdistancia (string nombre) {
       };
 };
 
-mdistancia :: mdistancia (int n, vector <vector <precogida> > &vec) {
+mdistancia :: mdistancia (int n, vector <vector <precogida> > &vec, int nvec, int carga) {
    N = n;
    md = vec;
+   nvehiculos = nvec;
+   ucarga = carga;
 }
 
 int mdistancia :: getsize() {
@@ -171,6 +173,14 @@ void mdistancia :: imprimir() {
 void mdistancia :: set_visitados(int i) {
    for (int j = 0; j < N; j++)
       md[i][j].setvisitado();
+};
+
+int mdistancia :: getnvehiculos(){
+   return nvehiculos;
+};
+
+int mdistancia :: getcarga() {
+   return ucarga;
 };
 
 /*
@@ -342,7 +352,7 @@ float ruta :: getdistanciaij (int i, int j) {
 
 resolver :: resolver (mdistancia mat) {
   rt = new ruta(mat);
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < mat.getnvehiculos(); i++) {
      tvehiculo vec(i,15+i);
      vehiculos.push_back(vec);
   }
@@ -377,7 +387,7 @@ void optimo :: repetir (int n) {
       sol->ejecutar();
       cout << "Sol->getcoste... " << sol->get_coste_total() << " VS " << menor->get_coste_total() << endl;
       if (sol->get_coste_total() < menor->get_coste_total()) {
-	     cout << "=00000000mejor" << endl;
+	     cout << "---> Se ha encontrado una mejor" << endl;
          menor =  sol;
       }
       gettimeofday(&fin, NULL);
