@@ -352,12 +352,15 @@ float ruta :: getdistanciaij (int i, int j) {
 
 resolver :: resolver (mdistancia mat) {
   rt = new ruta(mat);
+  cout << "numero de vehiculos: " << mat.getnvehiculos()  << endl;
+  cin.get();
   for (int i = 0; i < mat.getnvehiculos(); i++) {
-     tvehiculo vec(i,15+i);
+     tvehiculo vec(i,mat.getcarga());
      vehiculos.push_back(vec);
   }
   coste_total = 0;
-  cmed = 6;
+  //cmed = 6;
+  cmed = mat.getnvehiculos();
 };
 
 void resolver :: ejecutar() {
@@ -365,13 +368,14 @@ void resolver :: ejecutar() {
       rt->buscar(vehiculos[i],cmed);
       coste_total+=vehiculos[i].get_coste();
    }
+   cout << "fin resolver ejecutar()" << endl;
 };
 
 int resolver :: get_coste_total() {
    return coste_total;
 };
 
-optimo :: optimo (mdistancia mat) {
+optimo :: optimo (mdistancia &mat) {
    inicial = new resolver(mat);
    menor = new resolver(mat);
    matr = mat;

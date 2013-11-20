@@ -33,11 +33,11 @@ int main() {
 	mdistancia matriz;
 	matriz = sol.convertir();
 	cout << "aqui" << endl;
-	matriz.imprimir();
+	//matriz.imprimir();
 	cin.get();
+	cout << "Hola" << endl;
 	optimo opt(matriz);
 	opt.repetir(1);
-	cin.get();
 
 
 }

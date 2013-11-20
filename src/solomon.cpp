@@ -198,7 +198,7 @@ mdistancia solomon :: convertir () {
 	  };
    mdistancia ret(nclientes,aux2,ncamiones,capacidadcamiones);
    cout << "llamada desde solomon convertir" << endl;
-   ret.imprimir();
-   cin.get();
+   //ret.imprimir();
+   //cin.get();
    return ret;
 }

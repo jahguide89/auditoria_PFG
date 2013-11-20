@@ -104,7 +104,7 @@ private:
    resolver * menor;
    mdistancia matr;
 public:
-  optimo (mdistancia mat);
+  optimo (mdistancia &mat);
   void repetir (int i);
 };
 
