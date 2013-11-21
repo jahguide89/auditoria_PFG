@@ -18,6 +18,7 @@ class precogida { //la idea es hacerla abstracta
    int id; //numero identificador
    float distancia; //distancia
    bool visitado;
+   int demanda;
 public:
    precogida ();
    precogida (int x, float d);
@@ -29,6 +30,8 @@ public:
    void setvisitado ();
    bool check_visitado ();
    bool operator < (precogida p) const;
+   int getdemanda();
+   void setdemanda(int dmd);
 };
 
 class tvehiculo {
@@ -67,6 +70,7 @@ public:
    void set_visitados (int i);
    int getnvehiculos();
    int getcarga();
+   void mostrar_demandas();
 };
 
 class ruta {
@@ -76,7 +80,7 @@ private:
    list <int> visitados; //clientes visitados
 public:
    //ruta();
-   ruta(mdistancia mat); //constructor con una matriz ya inicializada desde fuera
+   ruta(mdistancia &mat); //constructor con una matriz ya inicializada desde fuera
    ruta(string nombre);
    vector<precogida> ordenar_fila (int i);
    precogida candidatos (int i);

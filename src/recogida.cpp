@@ -25,6 +25,7 @@ precogida :: precogida (const precogida &p) {
    visitado = NULL;
    id = p.id;
    distancia = p.distancia;
+   demanda = p.demanda;
 };
 
 void precogida :: setid (int iid) {
@@ -48,6 +49,14 @@ bool precogida :: operator < (precogida p) const {
       return true;
    return false;
 };
+
+int precogida :: getdemanda() {
+   return demanda;
+}
+
+void precogida :: setdemanda(int dmd) {
+   demanda = dmd;
+}
 
 tvehiculo :: tvehiculo () {
    id = -1;
@@ -177,7 +186,16 @@ int mdistancia :: getcarga() {
    return ucarga;
 };
 
-ruta :: ruta (mdistancia mat) {
+void mdistancia :: mostrar_demandas() {
+   for (int i = 0; i < N; i++) {
+	 for(int j=0;j < N; j++)
+	   cout << md[i][j].getdemanda() << "-";
+   cout << endl;
+   }
+   cout << "------------------" << endl;
+};
+
+ruta :: ruta (mdistancia &mat) {
    mraw = mat;
    mord = mat;    //nn
    //mord.ordenar_matriz();
@@ -221,16 +239,20 @@ bool ruta :: buscar (tvehiculo &v, int media) { //ruta parcial
    if (!fin_visitas()) {
 	   int cont = 0;
 	   int siguiente = 0;
-	   float coste = 0.0;
+	   //float coste = 0.0;
 	   precogida ret;
-	   while (cont < mord.getsize() && v.getcarga_actual()+media <= v.getcarga_max() && !fin_visitas()) {
+	   int demanda = 0;
+	   while (cont < mraw.getsize() && v.getcarga_actual()+demanda <= v.getcarga_max() && !fin_visitas()) {
 		  ret = candidatos(siguiente);
 		  cout << "----------->siguiente: " << ret.getid() << endl;
+		  demanda = ret.getdemanda();
+		  cout << "Demanda: " << demanda << endl;
+		  //cin.get();
 		  cont++;
 		  v.sumar_coste(ret.getdistancia());
 		  siguiente = ret.getid();
 		  v.insertar(siguiente);
-		  v.sumar_carga(media);
+		  v.sumar_carga(demanda);
 	   }
 	   v.sumar_coste(getdistanciaij(ret.getid(),0)); //añadimos el coste de ir desde el ultimo punto hasta el origen
 	   v.insertar(0); //añadimos al recorrido del vehiculo la vuelta al origen
@@ -350,10 +372,6 @@ void optimo :: repetir (int n, char delimitador) {
       }
 
       ss << i << delimitador << tiempo << delimitador << sol->get_ruta() << delimitador << sol->get_coste_total() << endl;
-      //cout << ss.str();
-      //out << ss.str();
-
-      //cout << "Duracion del calculo: " << ((fin.tv_sec+(float)fin.tv_usec/1000000)-(inicio.tv_sec+(float)inicio.tv_usec/1000000)) << endl;
    };
    out << "Iteracion mejor solucion" << delimitador << "tiempo" << delimitador << "ruta" << delimitador << "coste" << endl;
    out << mejorit << delimitador << mejortiempo << delimitador << menor->get_ruta() << delimitador << menor->get_coste_total() << endl;

@@ -83,10 +83,6 @@ solomon :: solomon () {
    ncamiones = 0;
    nclientes = 0;
    capacidadcamiones = 0;
-   xmin = 9999;
-   xmax = 0;
-   ymin = 9999;
-   ymax = 0;
 };
 
 solomon :: solomon (string nombre) {
@@ -182,9 +178,28 @@ mdistancia solomon :: convertir () {
 	  for (int j = 0; j < nclientes; j++) {
 		aux2[i][j].setdistancia(matriz[i][j]);
 		aux2[i][j].setid(j);
+		aux2[i][j].setdemanda(listado[j].getdemanda());
+		//cout << "getdemanda: " << listado[j].getdemanda() << endl;
+		//cin.get();
+		//aux2[i][j].setdemanda(matri);
 	  };
-   mdistancia ret(nclientes,aux2,ncamiones,capacidadcamiones);
+   /*
+   cout << "Antes de pasar a mdistancia" << endl;
+   cout << "nclientes: " << nclientes << endl;
+   for (int i = 0; i < nclientes; i++) {
+	   for (int j = 0; j < nclientes; j++) {
+          cout << aux2[i][j].getdemanda() << " ";
+	   };
+	   cout << endl;
+   };
+
+   //cout << "despues de crear mdistancia: " << endl;
+   //ret.mostrar_demandas();
+   //cin.get();
    //ret.imprimir();
    //cin.get();
+    */
+   mdistancia ret(nclientes,aux2,ncamiones,capacidadcamiones);
    return ret;
 }
+
