@@ -1,10 +1,3 @@
-/*
- * solomon.cpp
- *
- *  Created on: 15/11/2013
- *      Author: David
- */
-
 #include "solomon.h"
 #include <fstream>
 #include <vector>
@@ -96,9 +89,6 @@ solomon :: solomon () {
    ymax = 0;
 };
 
-//getNextLine no devuelve nada, devuelve 1 si es el final del fichero, sino devuelve 0
-//simplemente comprueba que no se haya acabado el fichero
-//
 solomon :: solomon (string nombre) {
    ifstream file(nombre.c_str());
    string aux;
@@ -142,7 +132,6 @@ void solomon :: mostrarmatriz () {
 	cout << "Nclientes: " << nclientes << endl;
 	cout << "matriz size: " << matriz.size() << endl;
 	cout << "listado size: " << listado.size() << endl;
-	cin.get();
 	for (unsigned int i = 0; i < matriz.size(); i++) {
 		for (unsigned int j = 0; j < matriz.size(); j++)
            cout << matriz[i][j];
@@ -189,15 +178,12 @@ mdistancia solomon :: convertir () {
    for (int i = 0; i < nclientes; i++)
 	 aux2.push_back(aux);
    //fin de la inicializacion de la matriz
-   cout << "holakase" << endl;
-   cout << "nclientes: " << nclientes << endl;
    for (int i = 0; i < nclientes; i++)
 	  for (int j = 0; j < nclientes; j++) {
 		aux2[i][j].setdistancia(matriz[i][j]);
 		aux2[i][j].setid(j);
 	  };
    mdistancia ret(nclientes,aux2,ncamiones,capacidadcamiones);
-   cout << "llamada desde solomon convertir" << endl;
    //ret.imprimir();
    //cin.get();
    return ret;

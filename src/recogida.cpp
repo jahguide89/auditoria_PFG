@@ -1,9 +1,3 @@
-/*
- * recogida.cpp
- *
- *  Created on: 14/11/2013
- *      Author: David
- */
 
 #include "recogida.h"
 
@@ -183,82 +177,6 @@ int mdistancia :: getcarga() {
    return ucarga;
 };
 
-/*
-ruta :: ruta() {
-   mdistancia aux("entrada.txt");
-   mraw = aux;
-   mord = aux;
-   mord.ordenar_matriz();
-   insertar_visitado(0);
-};
-
-precogida ruta :: candidatos (int i) { // dado un punto buscamos los 3 mas cercanos que no hayan sido visitados ya, para poder seleccionar uno de forma aleatoria
-   //srand(time(NULL));
-   //srand(3);
-   vector<precogida> tresmenores;
-   int cuenta = 0;
-   int j = 0;
-   while (cuenta != 3 && j < mord.getsize() && !fin_visitas()) {
-      if (comprobar_visitado(mord.get(i,j).getid()) == false && mord.get(i,j).getdistancia() != 0) {
-         tresmenores.push_back(mord.get(i,j));
-         cuenta++;
-      }
-      j++;
-   };
-   int indice = rand()% tresmenores.size(); // puede ser que en vez de 3 puntos tengamos dos o 1
-   cout << "indice original: " << i << "," << tresmenores[indice].getid() << endl;
-   cout << "distancia: " << tresmenores[indice].getdistancia() << endl;
-   insertar_visitado(tresmenores[indice].getid());
-   return tresmenores[indice];
-};
-
-void ruta :: buscar (tvehiculo &v, int media) {
-   int cont = 0;
-   int siguiente = 0;
-   float coste = 0.0;
-   //int carga_actual = 0;
-   precogida ret;
-   while (cont < mord.getsize() && v.getcarga_actual()+media <= v.getcarga_max() && !fin_visitas()) {
-      //precogida ret;
-      ret = candidatos(siguiente);
-      cout << "----------->siguiente: " << ret.getid() << endl;
-      cont++;
-      //coste+= ret.getdistancia();
-      v.sumar_coste(ret.getdistancia());
-      siguiente = ret.getid();
-      //carga_actual += media;
-      v.insertar(siguiente);
-      v.sumar_carga(media);
-   }
-   v.sumar_coste(getdistanciaij(ret.getid(),0)); //añadimos el coste de ir desde el ultimo punto hasta el origen
-   v.insertar(0); //añadimos al recorrido del vehiculo la vuelta al origen
-   cout << "distancia del ultimo punto al origen: " << getdistanciaij(ret.getid(),0) << endl;
-   cout << "ultimo punto: " << ret.getid() << endl;
-   cout << "cuenta: " << cont << endl;
-   cout << "coste total: " << v.get_coste() << endl;
-   cout << "carga: " << v.getcarga_actual() << endl;
-   //v.impr_recorrido();
-   cout << "Puntos totales visitados: " << endl;
-   for (list<int> :: iterator it = visitados.begin(); it != visitados.end(); it++)
-      cout << " " << (*it);
-   cout << endl << "----------------" << endl;
-};
-*/
-
-//eliminar de la matriz auxiliar o inutilizar los elementos ya visitados -- De todas formas tienes que recorrer la fila entera para identificar los utiles.
-
-//insertar en un vector auxiliar los elementos no visitados y ordenarlos
-/*
-ruta :: ruta() {
-   mdistancia aux("entrada.txt");
-   mraw = aux;
-   mord = aux;    //nn
-   //mord.ordenar_matriz();
-   insertar_visitado(0);
-};
-
-*/
-
 ruta :: ruta (mdistancia mat) {
    mraw = mat;
    mord = mat;    //nn
@@ -292,21 +210,20 @@ precogida ruta :: candidatos (int i) { // dado un punto buscamos los 3 mas cerca
       indice = rand()% 3;
    else
       indice = rand()% candidatos.size(); // puede ser que en vez de 3 puntos tengamos dos o 1
-   cout << "indice original: " << i << "," << candidatos[indice].getid() << endl;
-   cout << "distancia: " << candidatos[indice].getdistancia() << endl;
+   //cout << "indice original: " << i << "," << candidatos[indice].getid() << endl;
+  // cout << "distancia: " << candidatos[indice].getdistancia() << endl;
    insertar_visitado(candidatos[indice].getid());
    return candidatos[indice];
 };
 
-void ruta :: buscar (tvehiculo &v, int media) { //ruta parcial
+bool ruta :: buscar (tvehiculo &v, int media) { //ruta parcial
+   cout << "fin de visitas? " << fin_visitas() << endl;
    if (!fin_visitas()) {
 	   int cont = 0;
 	   int siguiente = 0;
 	   float coste = 0.0;
 	   precogida ret;
 	   while (cont < mord.getsize() && v.getcarga_actual()+media <= v.getcarga_max() && !fin_visitas()) {
-		  //precogida ret;
-		  cout << "entra en el while" << endl;
 		  ret = candidatos(siguiente);
 		  cout << "----------->siguiente: " << ret.getid() << endl;
 		  cont++;
@@ -315,26 +232,24 @@ void ruta :: buscar (tvehiculo &v, int media) { //ruta parcial
 		  v.insertar(siguiente);
 		  v.sumar_carga(media);
 	   }
-	   cout << "fuera del while: " << endl;
-	   cout << "Ret getid(): " << ret.getid() << endl;
-	   cout << "fin de visitas?? " << fin_visitas() << endl;
-	   cin.get();
 	   v.sumar_coste(getdistanciaij(ret.getid(),0)); //añadimos el coste de ir desde el ultimo punto hasta el origen
-	   cout << "despues de sumar el coste" << endl;
 	   v.insertar(0); //añadimos al recorrido del vehiculo la vuelta al origen
-	   //cout << "distancia del ultimo punto al origen: " << getdistanciaij(ret.getid(),0) << endl;
-	   cout << "ultimo punto: " << ret.getid() << endl;
-	   cout << "cuenta: " << cont << endl;
+	   v.impr_recorrido();
+	   //cin.get();
+	   //cout << "distancia del ultimo punto al origen: " << getdistanciaij(ret.getid(),0) << endl
+	   cout << "ultimo punto visitado: " << ret.getid() << endl;
+	   //cout << "cuenta: " << cont << endl;
 	   cout << "coste total del vehiculo: " << v.get_coste() << endl;
-	   //cout << "carga: " << v.getcarga_actual() << endl;
-	   //v.impr_recorrido();
+	   return true;
    }
-   else
+   else {
       cout << "Ya todos los puntos estan visitados" << endl;
+      return false;
+   }
    cout << "Puntos totales visitados hasta el momento: " << endl;
    for (list<int> :: iterator it = visitados.begin(); it != visitados.end(); it++)
       cout << " " << (*it);
-   cout << "Son: " << visitados.size() << endl << "----------------" << endl;
+   cout << " Son: " << visitados.size() << endl << "----------------" << endl;
 };
 
 
@@ -360,11 +275,14 @@ float ruta :: getdistanciaij (int i, int j) {
    return ret.getdistancia(); //devolvemos la distancia de un punto a otro
 };
 
-resolver :: resolver (mdistancia mat) {
+list <int> ruta :: get_visitados() {
+   return visitados;
+};
+
+resolver :: resolver (mdistancia mat) { //corregir
   rt = new ruta(mat);
   cout << "numero de vehiculos: " << mat.getnvehiculos()  << endl;
   cout << "carga de los vehiculos: " << mat.getcarga() << endl;
-  cin.get();
   for (int i = 0; i < mat.getnvehiculos(); i++) {
      tvehiculo vec(i,mat.getcarga());
      vehiculos.push_back(vec);
@@ -375,17 +293,31 @@ resolver :: resolver (mdistancia mat) {
 };
 
 void resolver :: ejecutar() {
-   for (int i = 0; i < vehiculos.size(); i++) {
-
-      rt->buscar(vehiculos[i],cmed);
+   bool existe = true ;
+   unsigned int i = 0;
+   while ((i < vehiculos.size()) && (existe)){
+      existe = rt->buscar(vehiculos[i],cmed);
       coste_total+=vehiculos[i].get_coste();
       cout << "Iteracion : " << i << endl;
+      i++;
    }
-   cout << "fin resolver ejecutar()" << endl;
+   if (i == vehiculos.size())
+      cout << "Ha sido necesario usar todos los vehiculos" << endl;
+   if (!existe)
+      cout << "Se han visitado todos los puntos sin usar el total de vehiculos" << endl;
 };
 
 int resolver :: get_coste_total() {
    return coste_total;
+};
+
+string resolver :: get_ruta() {
+   list <int> ret = rt->get_visitados();
+   stringstream ss;
+   for (list<int> :: iterator it = ret.begin(); it != ret.end(); it++) {
+      ss << (*it) << " ";
+   }
+   return ss.str();
 };
 
 optimo :: optimo (mdistancia &mat) {
@@ -394,23 +326,43 @@ optimo :: optimo (mdistancia &mat) {
    matr = mat;
 }
 
-void optimo :: repetir (int n) {
+//implementar salida
+void optimo :: repetir (int n, char delimitador) {
    menor->ejecutar();
    struct timeval inicio, fin;
+   unsigned int mejorit = 0;
+   float mejortiempo = 0.0;
+   stringstream ss;
+   ofstream out("salida.txt");
    for (int i = 0;i < n; i++) {
       gettimeofday(&inicio, NULL);
-      cout << endl << endl << endl;
+      //cout << endl << endl << endl;
       resolver *sol = new resolver(matr);
       sol->ejecutar();
-      cout << "Sol->getcoste... " << sol->get_coste_total() << " VS " << menor->get_coste_total() << endl;
-      if (sol->get_coste_total() < menor->get_coste_total()) {
-	     cout << "---> Se ha encontrado una mejor" << endl;
-         menor =  sol;
-      }
+      //cout << "Sol->getcoste... " << sol->get_coste_total() << " VS " << menor->get_coste_total() << endl;
       gettimeofday(&fin, NULL);
-      cout << "Duracion del calculo: " << ((fin.tv_sec+(float)fin.tv_usec/1000000)-(inicio.tv_sec+(float)inicio.tv_usec/1000000)) << endl;
+      float tiempo = ((fin.tv_sec+(float)fin.tv_usec/1000000)-(inicio.tv_sec+(float)inicio.tv_usec/1000000));
+      if (sol->get_coste_total() < menor->get_coste_total()) {
+	     //cout << "---> Se ha encontrado una mejor" << endl;
+         menor =  sol;
+         mejorit = i;
+         mejortiempo = tiempo;
+      }
+
+      ss << i << delimitador << tiempo << delimitador << sol->get_ruta() << delimitador << sol->get_coste_total() << endl;
+      //cout << ss.str();
+      //out << ss.str();
+
+      //cout << "Duracion del calculo: " << ((fin.tv_sec+(float)fin.tv_usec/1000000)-(inicio.tv_sec+(float)inicio.tv_usec/1000000)) << endl;
    };
+   out << "Iteracion mejor solucion" << delimitador << "tiempo" << delimitador << "ruta" << delimitador << "coste" << endl;
+   out << mejorit << delimitador << mejortiempo << delimitador << menor->get_ruta() << delimitador << menor->get_coste_total() << endl;
+   out << "Numero_iteracion" << delimitador << "tiempo" << delimitador << "ruta" << delimitador << "coste" << endl;
+   out << ss.str();
+   out.close();
+   cout << "Iteracion del mejor: " << mejorit << endl;
    cout << "El mejor: " << menor->get_coste_total() << endl;
+   cout << "ruta: " << menor->get_ruta() << endl;
 };
 
 
@@ -574,3 +526,78 @@ int main () {
 
 */
 
+/*
+ruta :: ruta() {
+   mdistancia aux("entrada.txt");
+   mraw = aux;
+   mord = aux;
+   mord.ordenar_matriz();
+   insertar_visitado(0);
+};
+
+precogida ruta :: candidatos (int i) { // dado un punto buscamos los 3 mas cercanos que no hayan sido visitados ya, para poder seleccionar uno de forma aleatoria
+   //srand(time(NULL));
+   //srand(3);
+   vector<precogida> tresmenores;
+   int cuenta = 0;
+   int j = 0;
+   while (cuenta != 3 && j < mord.getsize() && !fin_visitas()) {
+      if (comprobar_visitado(mord.get(i,j).getid()) == false && mord.get(i,j).getdistancia() != 0) {
+         tresmenores.push_back(mord.get(i,j));
+         cuenta++;
+      }
+      j++;
+   };
+   int indice = rand()% tresmenores.size(); // puede ser que en vez de 3 puntos tengamos dos o 1
+   cout << "indice original: " << i << "," << tresmenores[indice].getid() << endl;
+   cout << "distancia: " << tresmenores[indice].getdistancia() << endl;
+   insertar_visitado(tresmenores[indice].getid());
+   return tresmenores[indice];
+};
+
+void ruta :: buscar (tvehiculo &v, int media) {
+   int cont = 0;
+   int siguiente = 0;
+   float coste = 0.0;
+   //int carga_actual = 0;
+   precogida ret;
+   while (cont < mord.getsize() && v.getcarga_actual()+media <= v.getcarga_max() && !fin_visitas()) {
+      //precogida ret;
+      ret = candidatos(siguiente);
+      cout << "----------->siguiente: " << ret.getid() << endl;
+      cont++;
+      //coste+= ret.getdistancia();
+      v.sumar_coste(ret.getdistancia());
+      siguiente = ret.getid();
+      //carga_actual += media;
+      v.insertar(siguiente);
+      v.sumar_carga(media);
+   }
+   v.sumar_coste(getdistanciaij(ret.getid(),0)); //añadimos el coste de ir desde el ultimo punto hasta el origen
+   v.insertar(0); //añadimos al recorrido del vehiculo la vuelta al origen
+   cout << "distancia del ultimo punto al origen: " << getdistanciaij(ret.getid(),0) << endl;
+   cout << "ultimo punto: " << ret.getid() << endl;
+   cout << "cuenta: " << cont << endl;
+   cout << "coste total: " << v.get_coste() << endl;
+   cout << "carga: " << v.getcarga_actual() << endl;
+   //v.impr_recorrido();
+   cout << "Puntos totales visitados: " << endl;
+   for (list<int> :: iterator it = visitados.begin(); it != visitados.end(); it++)
+      cout << " " << (*it);
+   cout << endl << "----------------" << endl;
+};
+*/
+
+//eliminar de la matriz auxiliar o inutilizar los elementos ya visitados -- De todas formas tienes que recorrer la fila entera para identificar los utiles.
+
+//insertar en un vector auxiliar los elementos no visitados y ordenarlos
+/*
+ruta :: ruta() {
+   mdistancia aux("entrada.txt");
+   mraw = aux;
+   mord = aux;    //nn
+   //mord.ordenar_matriz();
+   insertar_visitado(0);
+};
+
+*/

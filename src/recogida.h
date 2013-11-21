@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <sys/time.h>
+#include <sstream>
 
 using namespace std;
 
@@ -79,11 +80,12 @@ public:
    ruta(string nombre);
    vector<precogida> ordenar_fila (int i);
    precogida candidatos (int i);
-   void buscar (tvehiculo &v, int media);
+   bool buscar (tvehiculo &v, int media);
    void insertar_visitado (int i);
    bool comprobar_visitado (int i);
    bool fin_visitas ();
    float getdistanciaij (int i, int j);
+   list <int> get_visitados();
 };
 
 class resolver {
@@ -96,6 +98,7 @@ public:
    resolver(mdistancia mat);
    void ejecutar ();
    int get_coste_total ();
+   string get_ruta();
 };
 
 class optimo {
@@ -105,7 +108,7 @@ private:
    mdistancia matr;
 public:
   optimo (mdistancia &mat);
-  void repetir (int i);
+  void repetir (int i,char delimitador);
 };
 
 #endif
