@@ -83,10 +83,6 @@ solomon :: solomon () {
    ncamiones = 0;
    nclientes = 0;
    capacidadcamiones = 0;
-   xmin = 9999;
-   xmax = 0;
-   ymin = 9999;
-   ymax = 0;
 };
 
 solomon :: solomon (string nombre) {

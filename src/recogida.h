@@ -37,6 +37,7 @@ class tvehiculo {
    int ua; //unidades de carga actual
    float coste; //coste de la ruta
    list <int> visitados;
+   bool usado;
 public:
    tvehiculo();
    tvehiculo(int i, int uut);
@@ -48,6 +49,8 @@ public:
    void sumar_carga (int cg);
    void sumar_coste (float cost);
    float get_coste ();
+   string get_recorrido();
+   bool enuso(); //sirve para detectar si un vehículo se ha utilizado o no
 };
 
 class mdistancia {
@@ -99,6 +102,8 @@ public:
    void ejecutar ();
    int get_coste_total ();
    string get_ruta();
+   string get_ruta_total();
+   unsigned int get_vehiculosusados();
 };
 
 class optimo {

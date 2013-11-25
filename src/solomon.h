@@ -51,8 +51,6 @@ private:
    int nclientes;
    int capacidadcamiones;
    vector <punto_solomon> listado;
-   int xmin, xmax;
-   int ymin, ymax;
    vector <vector <float> > matriz;
 public:
    solomon (); //inicializar a 0 los totales y los max y a 999 los mínimos

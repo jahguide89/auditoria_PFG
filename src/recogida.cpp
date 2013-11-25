@@ -55,6 +55,7 @@ tvehiculo :: tvehiculo () {
    ua = 0;
    coste = 0.0;
    visitados.push_back(0);
+   usado = false;
 };
 
 tvehiculo :: tvehiculo (int i, int uut) {
@@ -63,9 +64,11 @@ tvehiculo :: tvehiculo (int i, int uut) {
    ut = uut;
    ua = 0;
    visitados.push_back(0);
+   usado = false;
 };
 
 void tvehiculo :: insertar (int i) {
+   usado = true;
    visitados.push_back(i);
 };
 
@@ -74,6 +77,16 @@ void tvehiculo :: impr_recorrido () {
    for (list<int> :: iterator it = visitados.begin(); it != visitados.end(); it++)
       cout << "-" << (*it);
    cout << endl << endl;
+};
+
+string tvehiculo ::  get_recorrido() {
+   stringstream aux;
+   for (list<int> :: iterator it = visitados.begin(); it != visitados.end(); it++) {
+      aux << (*it) << " ";
+   }
+   //cout << "desde recorrido: " << aux.str() << endl;
+   //cin.get();
+   return aux.str();
 };
 
 int tvehiculo :: getid() {
@@ -98,6 +111,10 @@ void tvehiculo :: sumar_coste (float cost) {
 
 float tvehiculo :: get_coste () {
    return coste;
+};
+
+bool tvehiculo :: enuso() {
+   return usado;
 };
 
 mdistancia :: mdistancia () {
@@ -320,6 +337,25 @@ string resolver :: get_ruta() {
    return ss.str();
 };
 
+string resolver :: get_ruta_total() {
+   //vector <tvehiculo> vehiculos;
+   stringstream ss;
+   for (unsigned int i = 0; i < vehiculos.size();i++) {
+	  if (vehiculos[i].enuso())
+         ss << vehiculos[i].get_recorrido();
+   }
+   return ss.str();
+};
+
+unsigned int resolver :: get_vehiculosusados() {
+   unsigned int cont = 0;
+   for (unsigned int i = 0; i < vehiculos.size(); i++) {
+      if (vehiculos[i].enuso())
+    	  cont++;
+   }
+   return cont;
+};
+
 optimo :: optimo (mdistancia &mat) {
    inicial = new resolver(mat);
    menor = new resolver(mat);
@@ -329,275 +365,38 @@ optimo :: optimo (mdistancia &mat) {
 //implementar salida
 void optimo :: repetir (int n, char delimitador) {
    menor->ejecutar();
-   struct timeval inicio, fin;
+   //struct timeval inicio, fin;
    unsigned int mejorit = 0;
-   float mejortiempo = 0.0;
+   double mejortiempo = 0.0;
    stringstream ss;
+   clock_t t1;
+   clock_t t2;
    ofstream out("salida.txt");
    for (int i = 0;i < n; i++) {
-      gettimeofday(&inicio, NULL);
+	   t1 = clock();
+      //gettimeofday(&inicio, NULL);
       //cout << endl << endl << endl;
       resolver *sol = new resolver(matr);
       sol->ejecutar();
       //cout << "Sol->getcoste... " << sol->get_coste_total() << " VS " << menor->get_coste_total() << endl;
-      gettimeofday(&fin, NULL);
-      float tiempo = ((fin.tv_sec+(float)fin.tv_usec/1000000)-(inicio.tv_sec+(float)inicio.tv_usec/1000000));
+      //gettimeofday(&fin, NULL);
+      //double tiempo = ((fin.tv_sec+(float)fin.tv_usec/1000000)-(inicio.tv_sec+(float)inicio.tv_usec/1000000));
+	  t2 = clock();
+      double tiempo = (double)(t2 - t1) / CLOCKS_PER_SEC;
       if (sol->get_coste_total() < menor->get_coste_total()) {
 	     //cout << "---> Se ha encontrado una mejor" << endl;
          menor =  sol;
          mejorit = i;
          mejortiempo = tiempo;
       }
-
-      ss << i << delimitador << tiempo << delimitador << sol->get_ruta() << delimitador << sol->get_coste_total() << endl;
-      //cout << ss.str();
-      //out << ss.str();
-
-      //cout << "Duracion del calculo: " << ((fin.tv_sec+(float)fin.tv_usec/1000000)-(inicio.tv_sec+(float)inicio.tv_usec/1000000)) << endl;
+      ss << i << delimitador << tiempo << delimitador << sol->get_ruta_total() << delimitador << sol->get_coste_total() << delimitador << sol->get_vehiculosusados() << endl;
    };
-   out << "Iteracion mejor solucion" << delimitador << "tiempo" << delimitador << "ruta" << delimitador << "coste" << endl;
-   out << mejorit << delimitador << mejortiempo << delimitador << menor->get_ruta() << delimitador << menor->get_coste_total() << endl;
-   out << "Numero_iteracion" << delimitador << "tiempo" << delimitador << "ruta" << delimitador << "coste" << endl;
+   out << "Iteracion_mejor_solucion" << delimitador << "tiempo" << delimitador << "ruta" << delimitador << "coste" << delimitador << "numero_vehiculos_usados" << endl;
+   out << mejorit << delimitador << mejortiempo << delimitador << menor->get_ruta_total() << delimitador << menor->get_coste_total() << delimitador << menor->get_vehiculosusados() << endl;
+   out << "Numero_iteracion" << delimitador << "tiempo" << delimitador << "ruta" << delimitador << "coste" << delimitador << "numero_vehiculos_usados" << endl;
    out << ss.str();
    out.close();
    cout << "Iteracion del mejor: " << mejorit << endl;
    cout << "El mejor: " << menor->get_coste_total() << endl;
    cout << "ruta: " << menor->get_ruta() << endl;
 };
-
-
-/*
-Adaptar a mi código, en la clase solomon como operación
-int InstanceData::getNextLine(int *piLineLength)
-{
-        int iLineLength;
-
-        do
-        {
-                iLineLength = 0;
-                m_pLinePos = m_pDataPos; //almacena la dirección de memoria en la que comienza el fichero de datos
-
-                while (m_pDataPos < m_pDataEnd) //m_pDataPos inicialmente contiene la posición en la que comienza el fichero de datos
-                { //m_pDataEnd almacena la posición de memoria en la que termina el fichero
-                  //mientras no termine el fichero
-                        if (*m_pDataPos == '\r') //si se encuentra al principio de una línea (\r es retorno de carro)
-                        {
-                                m_iLine++; //almacena el número de línea, inicializado a 1, en la primera iteración se incrementará a 2
-                                m_pDataPos++; //incrementa la posición de memoria
-
-                                if (m_pDataPos < m_pDataEnd) //si tras incrementar sigue sin ser el final del fichero
-                                {
-                                        if (*m_pDataPos == '\n') //si es el final de una línea
-                                                m_pDataPos++;    //incrementa la posición de memoria
-                                }
-
-                                break;
-                        }
-                        else if (*m_pDataPos == '\n') //si es el final de una línea
-                        {
-                                m_iLine++;  //incrementar el número de línea
-                                m_pDataPos++; //incrementar la posición de memoria
-                                break;
-                        }
-
-                        iLineLength++; //se va incremenando, aparentemente tamaño de la línea
-                        //dado que se inicializa a 0, parece utilizarse para indicar si una línea está vacía o no
-                        //si vale 0, saltarse esa línea (más abajo)
-                        m_pDataPos++; //incrementa la posicion de memoria
-                }
-
-                // skip empty lines
-                while (iLineLength) //si vale 0, se sale del while
-                {
-                        switch (m_pLinePos[iLineLength-1])
-                        {
-                        case ' ': //si es un espacio
-                        case '\t': //o es un tabulador
-                                iLineLength--; //restarle uno al tamaño de la línea
-                                continue; //volver a comprobar si queda algo en la línea
-
-                        default: //si hay algo distinto de espacio o tabulador, habrá texto
-                                break; //salir del while
-                        }
-
-                        break;
-                }
-
-                if (iLineLength != 0) //si la línea no está vacía
-                {
-                        m_pLineEnd = m_pLinePos + iLineLength; //identificamos el final de la línea sumándole a la posición de la línea el tamaño de la misma
-
-                        if (piLineLength != NULL) //este puntero se pasa por parámetro, si no apunta a null
-                                *piLineLength = iLineLength; //almacenar en esa posición de memoria el tamaño de la línea
-
-                        return 0; // line found
-                }
-
-                if (m_pDataPos == m_pDataEnd) //si esos dos valores son iguales
-                {
-                        m_pLinePos = NULL;
-                        return 1; // end of file
-                }
-
-                // get next line
-        }
-        while (true);
-
-        return 0;
-}
-
-*/
-
-
-/*
-Idem
-int InstanceData::compareNoCase(char *szValue)
-{
-        int iLength;
-
-        // skip white spaces
-        while (m_pLinePos < m_pLineEnd)
-        {
-                switch (*m_pLinePos)
-                {
-                case ' ':
-                case '\t':
-                        m_pLinePos++;
-                        continue;
-
-                default:
-                        break;
-                }
-
-                break;
-        }
-
-        // end of line?
-        if (m_pLinePos == m_pLineEnd)
-                return 1;
-
-        iLength = strlen(szValue);
-
-        if (iLength > (m_pLineEnd-m_pLinePos))
-                return 1;
-
-#if defined(WIN32) || defined(WIN64)
-
-        if (strnicmp(m_pLinePos, szValue, iLength) != 0)
-                return 1;
-
-#else
-
-        if (strncasecmp(m_pLinePos, szValue, iLength) != 0)
-                return 1;
-
-#endif
-
-        m_pLinePos += iLength;
-
-        return 0;
-}
-
-
-*/
-
-/*
-
-int main () {
-
-   ruta rt;
-   tvehiculo camion1 (1,20);
-   tvehiculo camion2 (2,50);
-   rt.buscar(camion1,6);
-   rt.buscar(camion2,6);
-   camion1.impr_recorrido();
-   camion2.impr_recorrido();
-
-   resolver res;
-   res.ejecutar();
-   cout << "**** coste total: " << res.get_coste_total() << endl;
-   */
-   /*
-   optimo opt;
-   opt.repetir(100);
-
-   solomon sol("C102.txt");
-};
-
-*/
-
-/*
-ruta :: ruta() {
-   mdistancia aux("entrada.txt");
-   mraw = aux;
-   mord = aux;
-   mord.ordenar_matriz();
-   insertar_visitado(0);
-};
-
-precogida ruta :: candidatos (int i) { // dado un punto buscamos los 3 mas cercanos que no hayan sido visitados ya, para poder seleccionar uno de forma aleatoria
-   //srand(time(NULL));
-   //srand(3);
-   vector<precogida> tresmenores;
-   int cuenta = 0;
-   int j = 0;
-   while (cuenta != 3 && j < mord.getsize() && !fin_visitas()) {
-      if (comprobar_visitado(mord.get(i,j).getid()) == false && mord.get(i,j).getdistancia() != 0) {
-         tresmenores.push_back(mord.get(i,j));
-         cuenta++;
-      }
-      j++;
-   };
-   int indice = rand()% tresmenores.size(); // puede ser que en vez de 3 puntos tengamos dos o 1
-   cout << "indice original: " << i << "," << tresmenores[indice].getid() << endl;
-   cout << "distancia: " << tresmenores[indice].getdistancia() << endl;
-   insertar_visitado(tresmenores[indice].getid());
-   return tresmenores[indice];
-};
-
-void ruta :: buscar (tvehiculo &v, int media) {
-   int cont = 0;
-   int siguiente = 0;
-   float coste = 0.0;
-   //int carga_actual = 0;
-   precogida ret;
-   while (cont < mord.getsize() && v.getcarga_actual()+media <= v.getcarga_max() && !fin_visitas()) {
-      //precogida ret;
-      ret = candidatos(siguiente);
-      cout << "----------->siguiente: " << ret.getid() << endl;
-      cont++;
-      //coste+= ret.getdistancia();
-      v.sumar_coste(ret.getdistancia());
-      siguiente = ret.getid();
-      //carga_actual += media;
-      v.insertar(siguiente);
-      v.sumar_carga(media);
-   }
-   v.sumar_coste(getdistanciaij(ret.getid(),0)); //añadimos el coste de ir desde el ultimo punto hasta el origen
-   v.insertar(0); //añadimos al recorrido del vehiculo la vuelta al origen
-   cout << "distancia del ultimo punto al origen: " << getdistanciaij(ret.getid(),0) << endl;
-   cout << "ultimo punto: " << ret.getid() << endl;
-   cout << "cuenta: " << cont << endl;
-   cout << "coste total: " << v.get_coste() << endl;
-   cout << "carga: " << v.getcarga_actual() << endl;
-   //v.impr_recorrido();
-   cout << "Puntos totales visitados: " << endl;
-   for (list<int> :: iterator it = visitados.begin(); it != visitados.end(); it++)
-      cout << " " << (*it);
-   cout << endl << "----------------" << endl;
-};
-*/
-
-//eliminar de la matriz auxiliar o inutilizar los elementos ya visitados -- De todas formas tienes que recorrer la fila entera para identificar los utiles.
-
-//insertar en un vector auxiliar los elementos no visitados y ordenarlos
-/*
-ruta :: ruta() {
-   mdistancia aux("entrada.txt");
-   mraw = aux;
-   mord = aux;    //nn
-   //mord.ordenar_matriz();
-   insertar_visitado(0);
-};
-
-*/
