@@ -69,6 +69,10 @@ tvehiculo :: tvehiculo () {
    usado = false;
 };
 
+tvehiculo :: ~tvehiculo() {
+   visitados.clear();
+};
+
 tvehiculo :: tvehiculo (int i, int uut) {
    //coste = 0;
    id = i;
@@ -137,6 +141,10 @@ mdistancia :: mdistancia () {
    N = 0;
    ucarga = 0;
    nvehiculos = 0;
+};
+
+mdistancia :: ~mdistancia() {
+   md.clear();
 };
 
 mdistancia :: mdistancia (int n) {
@@ -395,7 +403,7 @@ optimo :: optimo (mdistancia &mat) {
 }
 
 //implementar salida
-void optimo :: repetir (int n, char delimitador) {
+void optimo :: repetir (int n, char delimitador, string salida) {
    menor->ejecutar();
    //struct timeval inicio, fin;
    unsigned int mejorit = 0;
@@ -403,7 +411,8 @@ void optimo :: repetir (int n, char delimitador) {
    stringstream ss;
    clock_t t1;
    clock_t t2;
-   ofstream out("salida.txt");
+   ofstream out(salida.c_str());
+   //ofstream out(salida);
    for (int i = 0;i < n; i++) {
 	   //cout << "Iteracion: " << i << endl;
 	   if (i == n * 0.5)

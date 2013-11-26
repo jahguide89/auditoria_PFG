@@ -43,6 +43,7 @@ class tvehiculo {
    bool usado;
 public:
    tvehiculo();
+   ~tvehiculo();
    tvehiculo(int i, int uut);
    void insertar (int i);
    void impr_recorrido ();
@@ -63,6 +64,7 @@ class mdistancia {
    int ucarga; //unidades de carga maxima de dichos vehiculos
 public:
    mdistancia ();
+   ~mdistancia();
    mdistancia (int n);
    mdistancia (string nombre);
    mdistancia (int n, vector <vector <precogida> > &vec, int nvec, int carga);
@@ -117,7 +119,7 @@ private:
    mdistancia matr;
 public:
   optimo (mdistancia &mat);
-  void repetir (int i,char delimitador);
+  void repetir (int i,char delimitador, string salida);
 };
 
 #endif
