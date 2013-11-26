@@ -85,6 +85,7 @@ private:
    list <int> visitados; //clientes visitados
 public:
    //ruta();
+   ruta (const ruta &r);
    ruta(mdistancia &mat); //constructor con una matriz ya inicializada desde fuera
    ruta(string nombre);
    vector<precogida> ordenar_fila (int i);
@@ -104,7 +105,10 @@ private:
    float coste_total;
    int cmed; //carga media de los contenedores
 public:
+   resolver();
    resolver(mdistancia mat);
+   resolver (const resolver &r);
+   ~resolver();
    void ejecutar ();
    float get_coste_total ();
    string get_ruta();

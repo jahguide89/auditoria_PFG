@@ -28,7 +28,7 @@ int main(int argc, char  *argv[]) {
 	   //cout << "iteraciones: " << iteraciones << endl;
 	   opt.repetir(10000,';',argv[2]);
 	}
-	else { //<entrada>
+	else if (argc == 1) { //<entrada>
 	   solomon sol(argv[1]);
 	   sol.mostrarlistado();
 	   sol.calcularmatriz();
@@ -37,6 +37,8 @@ int main(int argc, char  *argv[]) {
 	   optimo opt(matriz);
 	   opt.repetir(10000,';',"salida.txt");
 	}
+	else
+       cout << "Argumentos insuficientes" << endl;
 /*	cout << argc << endl;
 	cout << argv[1] << endl;
 	solomon sol(argv[1]);
