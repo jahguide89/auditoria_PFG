@@ -13,6 +13,7 @@ int main(int argc, char  *argv[]) {
 	mdistancia matriz;
 	matriz = sol.convertir();
 	optimo opt(matriz);
-	opt.repetir(100,';');
+	opt.repetir(100000,';');
+	cout << "fin" << endl;
 	cin.get();
 }

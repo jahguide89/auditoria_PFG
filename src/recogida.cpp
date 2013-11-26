@@ -265,7 +265,7 @@ precogida ruta :: candidatos (int i) { // dado un punto buscamos los 3 mas cerca
 };
 
 bool ruta :: buscar (tvehiculo &v, int media) { //ruta parcial
-   cout << "fin de visitas? " << fin_visitas() << endl;
+   //cout << "fin de visitas? " << fin_visitas() << endl;
    if (!fin_visitas()) {
 	   int cont = 0;
 	   int siguiente = 0;
@@ -274,9 +274,9 @@ bool ruta :: buscar (tvehiculo &v, int media) { //ruta parcial
 	   int demanda = 0;
 	   while (cont < mraw.getsize() && v.getcarga_actual()+demanda <= v.getcarga_max() && !fin_visitas()) {
 		  ret = candidatos(siguiente);
-		  cout << "----------->siguiente: " << ret.getid() << endl;
+		  //cout << "----------->siguiente: " << ret.getid() << endl;
 		  demanda = ret.getdemanda();
-		  cout << "Demanda: " << demanda << endl;
+		  //cout << "Demanda: " << demanda << endl;
 		  //cin.get();
 		  cont++;
 		  v.sumar_coste(ret.getdistancia());
@@ -286,15 +286,15 @@ bool ruta :: buscar (tvehiculo &v, int media) { //ruta parcial
 	   }
 	   v.sumar_coste(getdistanciaij(ret.getid(),0)); //añadimos el coste de ir desde el ultimo punto hasta el origen
 	   v.insertar(0); //añadimos al recorrido del vehiculo la vuelta al origen
-	   v.impr_recorrido();
+	   //v.impr_recorrido();
 	   //cin.get();
 	   //cout << "distancia del ultimo punto al origen: " << getdistanciaij(ret.getid(),0) << endl
-	   cout << "ultimo punto visitado: " << ret.getid() << endl;
+	   //cout << "ultimo punto visitado: " << ret.getid() << endl;
 	   //cout << "cuenta: " << cont << endl;
-	   cout << "coste total del vehiculo: " << v.get_coste() << endl;
+	   //cout << "coste total del vehiculo: " << v.get_coste() << endl;
 	   return true;
    }
-   cout << "Ya todos los puntos estan visitados" << endl;
+   //cout << "Ya todos los puntos estan visitados" << endl;
    return false;
 };
 
@@ -328,8 +328,8 @@ list <int> ruta :: get_visitados() {
 resolver :: resolver (mdistancia mat) { //corregir
   coste_total = 0.0;
   rt = new ruta(mat);
-  cout << "numero de vehiculos: " << mat.getnvehiculos()  << endl;
-  cout << "carga de los vehiculos: " << mat.getcarga() << endl;
+  //cout << "numero de vehiculos: " << mat.getnvehiculos()  << endl;
+  //cout << "carga de los vehiculos: " << mat.getcarga() << endl;
   for (int i = 0; i < mat.getnvehiculos(); i++) {
      tvehiculo vec(i,mat.getcarga());
      vehiculos.push_back(vec);
@@ -345,13 +345,13 @@ void resolver :: ejecutar() {
    while ((i < vehiculos.size()) && (existe)){
       existe = rt->buscar(vehiculos[i],cmed);
       coste_total+=vehiculos[i].get_coste();
-      cout << "Iteracion : " << i << endl;
+     // cout << "Iteracion : " << i << endl;
       i++;
    }
-   if (i == vehiculos.size())
-      cout << "Ha sido necesario usar todos los vehiculos" << endl;
-   if (!existe)
-      cout << "Se han visitado todos los puntos sin usar el total de vehiculos" << endl;
+   //if (i == vehiculos.size())
+      //cout << "Ha sido necesario usar todos los vehiculos" << endl;
+   //if (!existe)
+      //cout << "Se han visitado todos los puntos sin usar el total de vehiculos" << endl;
 };
 
 float resolver :: get_coste_total() {
@@ -405,6 +405,9 @@ void optimo :: repetir (int n, char delimitador) {
    clock_t t2;
    ofstream out("salida.txt");
    for (int i = 0;i < n; i++) {
+	   //cout << "Iteracion: " << i << endl;
+	   if (i == n * 0.5)
+		   cout << "iteracion: " << i << endl;
 	   t1 = clock();
 	  //gettimeofday(&inicio, NULL);
 	  //cout << endl << endl << endl;
@@ -428,7 +431,7 @@ void optimo :: repetir (int n, char delimitador) {
    out << "Numero_iteracion" << delimitador << "tiempo" << delimitador << "ruta" << delimitador << "coste" << delimitador << "numero_vehiculos_usados" << endl;
    out << ss.str();
    out.close();
-   cout << "Iteracion del mejor: " << mejorit << endl;
-   cout << "El mejor: " << menor->get_coste_total() << endl;
-   cout << "ruta: " << menor->get_ruta() << endl;
+   //cout << "Iteracion del mejor: " << mejorit << endl;
+   //cout << "El mejor: " << menor->get_coste_total() << endl;
+   //cout << "ruta: " << menor->get_ruta() << endl;
 };
