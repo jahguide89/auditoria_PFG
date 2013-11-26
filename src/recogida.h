@@ -104,7 +104,7 @@ private:
 public:
    resolver(mdistancia mat);
    void ejecutar ();
-   int get_coste_total ();
+   float get_coste_total ();
    string get_ruta();
    string get_ruta_total();
    unsigned int get_vehiculosusados();
