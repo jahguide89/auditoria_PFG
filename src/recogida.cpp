@@ -5,12 +5,14 @@ precogida :: precogida () {
    id = -1;
    distancia =-1;
    visitado = false;
+   demanda = 0;
 };
 
 precogida :: precogida (int x, float d) {
    visitado = NULL;
    id = x;
    distancia = d;
+   demanda = 0;
 };
 
 int precogida :: getid () {
@@ -133,9 +135,13 @@ bool tvehiculo :: enuso() {
 
 mdistancia :: mdistancia () {
    N = 0;
+   ucarga = 0;
+   nvehiculos = 0;
 };
 
 mdistancia :: mdistancia (int n) {
+  ucarga = 0;
+  nvehiculos = 0;
   N = n;
   vector<precogida> aux;
   precogida dummy;
@@ -146,6 +152,8 @@ mdistancia :: mdistancia (int n) {
 };
 
 mdistancia :: mdistancia (string nombre) {
+   ucarga = 0;
+   nvehiculos = 0;
    N = 0;
    ifstream fich(nombre.c_str());
    fich >> N;
@@ -286,14 +294,8 @@ bool ruta :: buscar (tvehiculo &v, int media) { //ruta parcial
 	   cout << "coste total del vehiculo: " << v.get_coste() << endl;
 	   return true;
    }
-   else {
-      cout << "Ya todos los puntos estan visitados" << endl;
-      return false;
-   }
-   cout << "Puntos totales visitados hasta el momento: " << endl;
-   for (list<int> :: iterator it = visitados.begin(); it != visitados.end(); it++)
-      cout << " " << (*it);
-   cout << " Son: " << visitados.size() << endl << "----------------" << endl;
+   cout << "Ya todos los puntos estan visitados" << endl;
+   return false;
 };
 
 
@@ -309,7 +311,7 @@ bool ruta :: comprobar_visitado (int i) {
 };
 
 bool ruta :: fin_visitas () {
-   if (visitados.size() == mraw.getsize())
+   if ((int)visitados.size() == (int)mraw.getsize())
       return true;
    return false;
 };
@@ -324,6 +326,7 @@ list <int> ruta :: get_visitados() {
 };
 
 resolver :: resolver (mdistancia mat) { //corregir
+  coste_total = 0.0;
   rt = new ruta(mat);
   cout << "numero de vehiculos: " << mat.getnvehiculos()  << endl;
   cout << "carga de los vehiculos: " << mat.getcarga() << endl;
@@ -352,7 +355,7 @@ void resolver :: ejecutar() {
 };
 
 float resolver :: get_coste_total() {
-	cout << "LLamada Get coste total: " << coste_total << endl;
+	//cout << "LLamada Get coste total: " << coste_total << endl;
 	//cin.get();
    return coste_total;
 };
