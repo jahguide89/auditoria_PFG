@@ -442,7 +442,9 @@ void optimo :: repetir (int n, char delimitador, string salida) {
    unsigned int nvehiculos = 0;
    //ofstream out("salida.txt");
    struct timeval iniTime, endTime;
+   struct timeval iniTimetot, endTimetot;
    cout << "Espere..." << endl;
+   gettimeofday(&iniTimetot,NULL);
    for (int i = 0;i < n; i++) {
 	   if (i == n * 0.5)
 	      cout << "iteracion: " << i << endl;
@@ -472,10 +474,13 @@ void optimo :: repetir (int n, char delimitador, string salida) {
 	  delete sol;
 	  //cout << "Iteracion: " << i << endl;
    };
+   gettimeofday(&endTimetot,NULL);
    out << "Iteracion_mejor_solucion" << delimitador << "tiempo" << delimitador << "ruta" << delimitador << "coste" << delimitador << "numero_vehiculos_usados" << endl;
    out << mejorit << delimitador << mejortiempo << delimitador << mejor_ruta << delimitador << menor_coste << delimitador << nvehiculos << endl;
    out << "Numero_iteracion" << delimitador << "tiempo" << delimitador << "ruta" << delimitador << "coste" << delimitador << "numero_vehiculos_usados" << endl;
    out << ss.str();
+   out << timeval_diff(&endTimetot,&iniTimetot);
+   cout << "Tiempo total: " << timeval_diff(&endTimetot,&iniTimetot) << " segundos" << endl;
    out.close();
    //cout << "Iteracion del mejor: " << mejorit << endl;
    //cout << "El mejor: " << menor->get_coste_total() << endl;
