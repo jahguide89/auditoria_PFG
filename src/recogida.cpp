@@ -421,6 +421,12 @@ optimo :: optimo (mdistancia &mat) {
    matr = mat;
 }
 
+double timeval_diff(struct timeval *a, struct timeval *b){
+  return
+    (double)(a->tv_sec + (double)a->tv_usec/1000000) -
+    (double)(b->tv_sec + (double)b->tv_usec/1000000);
+}
+
 //implementar salida
 void optimo :: repetir (int n, char delimitador, string salida) {
    menor->ejecutar();
@@ -428,18 +434,20 @@ void optimo :: repetir (int n, char delimitador, string salida) {
    unsigned int mejorit = 0;
    double mejortiempo = 0.0;
    stringstream ss;
-   clock_t t1;
-   clock_t t2;
+   //clock_t t1;
+   //clock_t t2;
    ofstream out(salida.c_str());
    string mejor_ruta;
-   float menor_coste = 0.0;
+   float menor_coste = menor->get_coste_total();
    unsigned int nvehiculos = 0;
    //ofstream out("salida.txt");
+   struct timeval iniTime, endTime;
    cout << "Espere..." << endl;
    for (int i = 0;i < n; i++) {
 	   if (i == n * 0.5)
 	      cout << "iteracion: " << i << endl;
-	   t1 = clock();
+	  // t1 = clock();
+	   gettimeofday(&iniTime, NULL);
 	  //gettimeofday(&inicio, NULL);
 	  //cout << endl << endl << endl;
 	  resolver *sol = new resolver(matr);
@@ -447,20 +455,22 @@ void optimo :: repetir (int n, char delimitador, string salida) {
 	  //cout << "Sol->getcoste... " << sol->get_coste_total() << " VS " << menor->get_coste_total() << endl;
 	  //gettimeofday(&fin, NULL);
 	  //double tiempo = ((fin.tv_sec+(float)fin.tv_usec/1000000)-(inicio.tv_sec+(float)inicio.tv_usec/1000000));
-	  t2 = clock();
-	  double tiempo = (double)(t2 - t1) / CLOCKS_PER_SEC;
-	  if (sol->get_coste_total() < menor->get_coste_total()) {
+	  //t2 = clock();
+	  gettimeofday(&endTime, NULL);
+	  //double tiempo = (double)(t2 - t1) / CLOCKS_PER_SEC;
+	  double tiempo = timeval_diff(&endTime, &iniTime);
+	  if (sol->get_coste_total() < menor_coste) {
 		 //cout << "---> Se ha encontrado una mejor" << endl;
 		// menor =  sol;
 		 mejorit = i;
 		 mejortiempo = tiempo;
-         mejor_ruta = menor->get_ruta_total();
-         menor_coste = menor->get_coste_total();
-         nvehiculos = menor->get_vehiculosusados();
+         mejor_ruta = sol->get_ruta_total();
+         menor_coste = sol->get_coste_total();
+         nvehiculos = sol->get_vehiculosusados();
 	  }
 	  ss << i << delimitador << tiempo << delimitador << sol->get_ruta_total() << delimitador << sol->get_coste_total() << delimitador << sol->get_vehiculosusados() << endl;
 	  delete sol;
-	  cout << "Iteracion: " << i << endl;
+	  //cout << "Iteracion: " << i << endl;
    };
    out << "Iteracion_mejor_solucion" << delimitador << "tiempo" << delimitador << "ruta" << delimitador << "coste" << delimitador << "numero_vehiculos_usados" << endl;
    out << mejorit << delimitador << mejortiempo << delimitador << mejor_ruta << delimitador << menor_coste << delimitador << nvehiculos << endl;

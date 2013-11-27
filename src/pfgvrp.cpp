@@ -39,17 +39,6 @@ int main(int argc, char  *argv[]) {
 	}
 	else
        cout << "Argumentos insuficientes" << endl;
-/*	cout << argc << endl;
-	cout << argv[1] << endl;
-	solomon sol(argv[1]);
-	sol.mostrarlistado();
-	sol.calcularmatriz();
-	mdistancia matriz;
-	matriz = sol.convertir();
-	optimo opt(matriz);
-	//opt.repetir(100000,';');
-	cout << "fin" << endl;
-*/
 	cout << "fin" << endl;
 	cout << "Puse cualquier tecla para finalizar..." << endl;
 	cin.get();

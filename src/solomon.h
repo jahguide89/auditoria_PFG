@@ -8,6 +8,7 @@
 #include <vector>
 #include "recogida.h"
 
+
 using namespace std;
 
 #ifndef SOLOMON_H_
@@ -79,5 +80,7 @@ public:
 
 
 };
+
+
 
 #endif /* SOLOMON_H_ */
