@@ -444,6 +444,7 @@ void optimo :: repetir (int n, char delimitador, string salida) {
    struct timeval iniTime, endTime;
    struct timeval iniTimetot, endTimetot;
    cout << "Espere..." << endl;
+   double tiempo = 0.0;
    gettimeofday(&iniTimetot,NULL);
    for (int i = 0;i < n; i++) {
 	   if (i == n * 0.5)
@@ -460,7 +461,7 @@ void optimo :: repetir (int n, char delimitador, string salida) {
 	  //t2 = clock();
 	  gettimeofday(&endTime, NULL);
 	  //double tiempo = (double)(t2 - t1) / CLOCKS_PER_SEC;
-	  double tiempo = timeval_diff(&endTime, &iniTime);
+	  tiempo += timeval_diff(&endTime, &iniTime);
 	  if (sol->get_coste_total() < menor_coste) {
 		 //cout << "---> Se ha encontrado una mejor" << endl;
 		// menor =  sol;
