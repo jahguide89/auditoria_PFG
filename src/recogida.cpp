@@ -441,8 +441,9 @@ void optimo :: repetir (int n, char delimitador, string salida) {
    float menor_coste = menor->get_coste_total();
    unsigned int nvehiculos = 0;
    //ofstream out("salida.txt");
-   struct timeval iniTime, endTime;
+   struct timeval iniTime, endTime, parcialtime;
    struct timeval iniTimetot, endTimetot;
+
    cout << "Espere..." << endl;
    double tiempo = 0.0;
    gettimeofday(&iniTimetot,NULL);
@@ -465,6 +466,8 @@ void optimo :: repetir (int n, char delimitador, string salida) {
 	  if (sol->get_coste_total() < menor_coste) {
 		 //cout << "---> Se ha encontrado una mejor" << endl;
 		// menor =  sol;
+		 gettimeofday(&parcialtime, NULL);
+		 mejortiempo = timeval_diff(&parcialtime,&iniTime);
 		 mejorit = i;
 		 mejortiempo = tiempo;
          mejor_ruta = sol->get_ruta_total();
