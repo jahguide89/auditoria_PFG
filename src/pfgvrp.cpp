@@ -42,4 +42,6 @@ int main(int argc, char  *argv[]) {
 	cout << "fin" << endl;
 	cout << "Puse cualquier tecla para finalizar..." << endl;
 	cin.get();
+
 }
+
